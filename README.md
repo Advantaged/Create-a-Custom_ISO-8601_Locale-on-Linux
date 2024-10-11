@@ -56,7 +56,7 @@ sudo nano /usr/share/i18n/locales/de_DE_ISO
 
 ```
 
-2. Replace the complete `LC_TIME`-chapter as following 🟰 `ISO-86-1`:
+2. Replace the complete `LC_TIME`-chapter as following 🟰 `ISO-8601`:
 
 ```
 % Define LC_TIME fields with ISO 8601 format
