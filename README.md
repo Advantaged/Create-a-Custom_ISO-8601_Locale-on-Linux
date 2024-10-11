@@ -216,7 +216,7 @@ date
 
 ```
 
-3. In Attachment some [pictures])Pictures/ with results, e.g. Dolphin, Konsole, ZFS, etc..
+3. In Attachment some [pictures](Pictures/) with results, e.g. Dolphin, Konsole, ZFS, etc..
 
 
 ✅ **Done** 👍 **& Enjoy**❗️
