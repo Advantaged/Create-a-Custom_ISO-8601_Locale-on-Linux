@@ -1,0 +1,61 @@
+LC_IDENTIFICATION
+title       "ISO 8601 English Locale"
+source      ""
+language    "English"
+territory   "ISO"
+revision    "1.0"
+date        "2024-03-27"
+END LC_IDENTIFICATION
+
+LC_CTYPE
+copy "en_US"  # Inherit character definitions
+END LC_CTYPE
+
+LC_TIME
+abday   "Sun";"Mon";"Tue";"Wed";"Thu";"Fri";"Sat"
+day     "Sunday";"Monday";"Tuesday";"Wednesday";"Thursday";"Friday";"Saturday"
+abmon   "Jan";"Feb";"Mar";"Apr";"May";"Jun";"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"
+mon     "January";"February";"March";"April";"May";"June";"July";"August";"September";"October";"November";"December"
+d_t_fmt "%Y-%m-%d %H:%M:%S"  # ISO-8601 datetime format
+d_fmt   "%Y-%m-%d"            # ISO-8601 date format
+t_fmt   "%H:%M:%S"            # ISO-8601 time format
+am_pm   "";""
+t_fmt_ampm ""
+date_fmt "%Y-%m-%d %H:%M:%S %Z"
+END LC_TIME
+
+LC_COLLATE
+copy "en_US"
+END LC_COLLATE
+
+LC_NUMERIC
+copy "de_DE"
+END LC_NUMERIC
+
+LC_MONETARY
+copy "de_DE"
+END LC_MONETARY
+
+LC_MESSAGES
+copy "en_US"
+END LC_MESSAGES
+
+LC_PAPER
+copy "de_DE"
+END LC_PAPER
+
+LC_NAME
+copy "de_DE"
+END LC_NAME
+
+LC_ADDRESS
+copy "de_DE"
+END LC_ADDRESS
+
+LC_TELEPHONE
+copy "de_DE"
+END LC_TELEPHONE
+
+LC_MEASUREMENT
+copy "de_DE"
+END LC_MEASUREMENT
