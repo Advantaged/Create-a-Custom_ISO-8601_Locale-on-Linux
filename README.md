@@ -1,102 +1,130 @@
-# Make-your-own_ISO-8601_locale
+# Create-a-Custom_ISO-8601_Locale-on-Linux
 
-* **Merit to:** [AI ChatGPT](https://chatgpt.com/)
+* **Merit to:** [AI DeepSeek](https://chat.deepseek.com/)
 * In my system i choose by the installation "American English" as Language and "Germany" as location but i want "date"
-to be represented following ISO-8601, like:
+to be represented following ISO-8601.
+
+## Create a Custom ISO-8601 Locale on Linux
+
+*Tested on CachyOS (Arch-based) | By: [tony advantaged]*
+
+#### Objective
+
+Configure your system to display dates in ISO-8601 format (**YYYY-MM-DD HH:MM:SS**) while keeping other locale settings (e.g., language, currency) unchanged.
+
+### Step 1: Copy the Base Locale File
+
+1. **Copy the German locale file** (replace `de_DE` with your country’s locale if needed):
 
 ```
-date
-2024-10-08 19:37:52 CEST
-
+sudo cp /usr/share/i18n/locales/de_DE /usr/share/i18n/locales/de_DE_ISO
 ```
 
-* The output of `locale`-command before the changes:
+*Why?* This preserves the original file and creates a modifiable copy.
+
+### Step 2: Modify the `LC_TIME` Section
+
+1. Open the copied file:
 
 ```
-locale
+sudo nano /usr/share/i18n/locales/de_DE_ISO
+```
+
+2. Replace the `LC_TIME` section with ISO-8601 formats:
+
+```
+LC_TIME
+abday   "So";"Mo";"Di";"Mi";"Do";"Fr";"Sa"
+day     "Sonntag";"Montag";"Dienstag";"Mittwoch";"Donnerstag";"Freitag";"Samstag"
+abmon   "Jan";"Feb";"Mär";"Apr";"Mai";"Jun";"Jul";"Aug";"Sep";"Okt";"Nov";"Dez"
+mon     "Januar";"Februar";"März";"April";"Mai";"Juni";"Juli";"August";"September";"Oktober";"November";"Dezember"
+d_t_fmt "%Y-%m-%d %H:%M:%S"  # ISO-8601 datetime
+d_fmt   "%Y-%m-%d"            # ISO-8601 date
+t_fmt   "%H:%M:%S"            # ISO-8601 time
+am_pm   "";""
+t_fmt_ampm ""
+date_fmt "%Y-%m-%d %H:%M:%S %Z"
+END LC_TIME
+```
+
+* ***Note:*** Most relevant part:
+
+```
+d_t_fmt "%Y-%m-%d %H:%M:%S"  # ISO-8601 datetime
+d_fmt   "%Y-%m-%d"            # ISO-8601 date
+t_fmt   "%H:%M:%S"            # ISO-8601 time
+am_pm   "";""
+t_fmt_ampm ""
+date_fmt "%Y-%m-%d %H:%M:%S %Z"
+```
+
+* ***Tip for Pros:*** Adjust day/month names for your language and/or use [en_ISO](en_ISO). The linked/mentioned file is especially made/tailored for people using English as OS-language &/but living in another country & want ISO-8601 as date/time representation and files-sorting/representation in their files-manager.
+
+### Step 3: Compile the Locale
+
+1. Generate the binary locale:
+
+```
+sudo localedef -i de_DE_ISO -f UTF-8 de_DE_ISO.UTF-8
+```
+
+* ***Why?*** This compiles the text file into a system-recognized locale.
+
+### Step 4: Update System Configuration
+
+#### 4.1: Add Locale to `/etc/locale.gen`
+
+1. Edit the file:
+
+```
+sudo nano /etc/locale.gen
+```
+
+2. Add:
+
+```
+de_DE_ISO.UTF-8 UTF-8
+```
+
+3. Regenerate locales:
+
+```
+sudo locale-gen
+```
+
+#### 4.2: Set `LC_TIME` System-Wide
+
+1. Edit `/etc/locale.conf`:
+
+```
+sudo nano /etc/locale.conf
+```
+
+2. Add/update:
+
+```
+LC_TIME=de_DE_ISO.UTF-8
+```
+
+3. My `/etc/locale.conf` made whit [en_ISO](en_ISO):
+
+```
 LANG=en_US.UTF-8
-LC_CTYPE="en_US.UTF-8"
 LC_NUMERIC=de_DE.UTF-8
-LC_TIME=de_DE.UTF-8
-LC_COLLATE="en_US.UTF-8"
+LC_TIME=en_ISO.UTF-8
 LC_MONETARY=de_DE.UTF-8
-LC_MESSAGES="en_US.UTF-8"
 LC_PAPER=de_DE.UTF-8
 LC_NAME=de_DE.UTF-8
 LC_ADDRESS=de_DE.UTF-8
 LC_TELEPHONE=de_DE.UTF-8
 LC_MEASUREMENT=de_DE.UTF-8
 LC_IDENTIFICATION=de_DE.UTF-8
-LC_ALL=
 
 ```
 
-### Step 1: Install `localedef`
+#### 4.3: Update Shell Configs
 
-Ensure you have the `glibc` package installed, which includes the `localedef` utility (it should be installed by
-default on Arch).
-
-### Step 2: Copy File
-
-1. Copy the `locale`-file of your Country-Location, e.g. for Germany:
-
-```
-sudo cp /usr/share/i18n/locales/de_DE /usr/share/i18n/locales/de_DE_ISO
-
-```
-
-In this manner, we don't touch the existing file but make only a copy to modify it.
-
-### Step 3: Modify & Compile new Locale
-
-1. Open the new copied file with an Editor, e.g.:
-
-```
-sudo nano /usr/share/i18n/locales/de_DE_ISO
-
-```
-
-2. Replace the complete `LC_TIME`-chapter as following 🟰 `ISO-8601`:
-
-```
-% Define LC_TIME fields with ISO 8601 format
-LC_TIME
-abday   "So";"Mo";"Di";"Mi";"Do";"Fr";"Sa"
-day     "Sonntag";"Montag";"Dienstag";"Mittwoch";"Donnerstag";"Freitag";"Samstag"
-abmon   "Jan";"Feb";"Mär";"Apr";"Mai";"Jun";"Jul";"Aug";"Sep";"Okt";"Nov";"Dez"
-mon     "Januar";"Februar";"März";"April";"Mai";"Juni";"Juli";"August";"September";"Oktober";"November";"Dezember"
-d_t_fmt "%Y-%m-%d %H:%M:%S"
-d_fmt   "%Y-%m-%d"
-t_fmt   "%H:%M:%S"
-am_pm   "";""
-t_fmt_ampm ""
-date_fmt "%Y-%m-%d %H:%M:%S %Z"
-END LC_TIME
-
-```
-
-* Don't forget to save and close the modified file after modification, if you use `nano`-editor…:
-	* [CTRL➕O] to save/store the file &
-	* [CTRL➕X] to close the editor.
-
-3. Compile the file through `localedef` with following command:
-
-```
-sudo localedef -i de_DE_ISO -f UTF-8 de_DE.ISO.UTF-8
-
-```
-
-* **Notes:**
-	* Adjust the file-name according to `copy`-command above.
-	* The need to compile the new/modified `locale`-file is (for me) new. That assure `locale` haven't errors. We have
-to thank the AI for this.
-
-### Step 4: Add/replace your system with new ISO-8601_TIME-Locale
-
-1. Find your `shell`-configuration files on your system. My system **"CachyOS"** have three different shell's: `bash`,
-`fish` & `zsh` & naturally configuration-files for `$ROOT` & `$USER`… hence, following my shell-configuration-files:
-
-* For `$ROOT`:
+* Config-Files-List of CachyOS for `$ROOT`:
 
 ```
 /etc/bash.bashrc
@@ -107,7 +135,7 @@ to thank the AI for this.
 
 ```
 
-* For `$USER`:
+* Config-Files-List of CachyOS for `$USER`:
 
 ```
 ~/.bashrc
@@ -118,83 +146,80 @@ to thank the AI for this.
 
 ```
 
-* **Note:** If you have only one `shell`… you just need to modify two files and not six in this step 😉.
 
-2. Add at End of these file following command:
-
-`export LC_TIME=de_DE.ISO.UTF-8`
-
-* **Notes:**
-	* Last Entry on configuration-files is what count under Linux, no need to search for `export LC_TIME=` in the file.
-	* Don't forget to let or insert an empty line at End of every configuration-file of/under Linux.
-	* If you use `nano`… hit/press [CTRL➕O] to save/store the file & [CTRL➕X] to close the editor.
-
-3. Modify `sudoers` to assure every app started as "Admin/Root" respect the new `LC_TIME=`
-
-* For this edit `visudo` and not `/etc/sudoers` because last one it doesn’t perform any syntax checking or file locking.
-* Edit/open `visudo` with following command:
-
-`sudo EDITOR=nano visudo`
-
-* & add following line:
-
-`Defaults env_keep += "LC_TIME"`
-
-* Don't forget to take care about last Notes above 😉.
-
-### Step 5: Modify `/etc/locale.conf`
-
-1. Edit/open `/etc/locale.conf` e.g. wit `nano` as follow:
-
-`sudo nano /etc/locale.conf`
-
-2. Replace your `LC_TIME=`Line according to your new ISO-8601-Locale:
-
-`LC_TIME=de_DE.ISO.UTF-8`
-
-* The complete `/etc/locale.conf` look like this:
+* **Syntax example for Fish:**
 
 ```
-LANG=en_US.UTF-8
-LC_NUMERIC=de_DE.UTF-8
-LC_TIME=de_DE.ISO.UTF-8
-LC_MONETARY=de_DE.UTF-8
-LC_PAPER=de_DE.UTF-8
-LC_NAME=de_DE.UTF-8
-LC_ADDRESS=de_DE.UTF-8
-LC_TELEPHONE=de_DE.UTF-8
-LC_MEASUREMENT=de_DE.UTF-8
-LC_IDENTIFICATION=de_DE.UTF-8
-
+# ~/.config/fish/config.fish
+set -gx LC_TIME de_DE_ISO.UTF-8
 ```
 
-3. Save/store ➕ close the file like already explained above.
-* **Notes:**
-	* The "locales" set in "Systemsettings/Language & Time/Region & Language" (we can call KDE- or Plasma-Settings) are
-independent from "Shell" (terminal/konsole) settings done above.
-	* Hence, the settings done till now assure "only" that we not get errors in the terminal during update/upgrade.
-	* That's mean… with the anchorage of "Shell-Settings" we avoid that "Plasma-Settings" interfere with
-"Shell-Settings"
-	* That mean also… if you want to set all other locales/variables for you country like "Numeric, Monetary, Paper,
-Name, Address, Telephone, Measurement & Identification" in "Plasma-Settings"… you have to export all variables as above
-described 😉.
+* **Syntax example for Bash/Zsh:**
 
-### Step 6: KDE-/Plasma-Settings
+```
+# ~/.bashrc or ~/.zshrc
+export LC_TIME=de_DE_ISO.UTF-8
+```
 
-* Now you can open **"Systemsettings/Language & Time/Region & Language"** and set "Time" to `en_SE` (or whatever you
-want) without waiting long time during the "Hook-Settings" ➕ error-messages by updating your system, e.g. `sudo pacman
--Syyu`
+* **Reload your shell:**
 
-### Results:
+```
+exec fish  # Fish
+source ~/.bashrc  # Bash
+source ~/.zshrc   # Zsh
+```
 
-1. Here the output of `locale`-command:
+#### 4.4: Preserve `LC_TIME` for Sudo/Root
+
+1. Edit sudoers safely:
+
+```
+sudo EDITOR=nano visudo
+```
+
+2. Add:
+
+```
+Defaults env_keep += "LC_TIME"
+```
+
+* **Note:** For loading the new configuration you can also log-out & re-log-in or restart your Linux-OS. People using Plasma-DE can also set/choose in `systemsettings/Region & Language/Time/English (Sweden)` or `en_SE`.
+
+### Step 5: Verify the Setup
+
+1. Check locales:
+
+
+```
+locale -a | grep de_DE_ISO  # Should show "de_DE_ISO.utf8"
+```
+
+2. Confirm LC_TIME:
+
+```
+locale | grep LC_TIME  # Should show "LC_TIME=de_DE_ISO.UTF-8"
+```
+
+3. Test the date format:
+
+```
+date  # Output: "2025-03-28 09:09:03 CET"
+```
+
+4. Read/Test all locales:
 
 ```
 locale
+```
+
+* All my tests:
+
+```
+❯ locale
 LANG=en_US.UTF-8
 LC_CTYPE="en_US.UTF-8"
 LC_NUMERIC=de_DE.UTF-8
-LC_TIME=de_DE.ISO.UTF-8
+LC_TIME=en_ISO.UTF-8
 LC_COLLATE="en_US.UTF-8"
 LC_MONETARY=de_DE.UTF-8
 LC_MESSAGES="en_US.UTF-8"
@@ -206,19 +231,32 @@ LC_MEASUREMENT=de_DE.UTF-8
 LC_IDENTIFICATION=de_DE.UTF-8
 LC_ALL=
 
+~
+❯ locale -a | grep -E "en_US|de_DE|en_ISO"
+de_DE.utf8
+en_ISO.utf8
+en_US.utf8
+
+~
+❯ date
+2025-03-28 09:03:38 CET
+
+~
+❯ locale | grep LC_TIME
+LC_TIME=en_ISO.UTF-8
+
 ```
 
-2. Here the output of `date`-command:
+#### Troubleshooting
+* Locale not found?
+    * Ensure the locale is listed in `/etc/locale.gen` and regenerated with `sudo locale-gen`. 
+* Date format unchanged?
+    * Verify `LC_TIME` is set in both `/etc/locale.conf` and your shell config. 
 
-```
-date
-2024-10-08 19:37:52 CEST
+#### Final Notes
+* **For Beginners:** Follow steps exactly—case sensitivity matters (e.g., `.UTF-8` vs `.utf8`)
+* **For Pros:** Extend this to other locales by modifying `LC_*` sections as needed or use [en_ISO](en_ISO).
 
-```
-
-3. In Attachment some [pictures](Pictures/) with results, e.g. Dolphin, Konsole, ZFS, etc..
-
-
-✅ **Done** 👍 **& Enjoy**❗️
+✅ **Done** 👍 **& Enjoy** ISO-8601 dates system-wide❗️ In Attachment some [pictures](Pictures/) with results, e.g. Dolphin, Konsole, ZFS, etc..
 
 .
