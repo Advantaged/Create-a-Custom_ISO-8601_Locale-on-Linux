@@ -106,7 +106,7 @@ sudo nano /etc/locale.conf
 LC_TIME=de_DE_ISO.UTF-8
 ```
 
-3. My `/etc/locale.conf` made whit [en_ISO](en_ISO):
+3. My `/etc/locale.conf` made with [en_ISO](en_ISO):
 
 ```
 LANG=en_US.UTF-8
