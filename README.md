@@ -17,7 +17,7 @@ Configure your system to display dates in ISO-8601 format (**YYYY-MM-DD HH:MM:SS
 1. **Copy the German locale file** (replace `de_DE` with your country’s locale if needed):
 
 ```
-sudo cp /usr/share/i18n/locales/de_DE /usr/share/i18n/locales/de_DE_ISO
+sudo cp /usr/share/i18n/locales/de_DE /usr/share/i18n/locales/de_ISO
 ```
 
 *Why?* This preserves the original file and creates a modifiable copy.
@@ -65,9 +65,10 @@ date_fmt "%Y-%m-%d %H:%M:%S %Z"
 1. Generate the binary locale:
 
 ```
-sudo localedef -i de_DE_ISO -f UTF-8 de_DE_ISO.UTF-8
+sudo localedef -i de_ISO -f UTF-8 de_ISO.UTF-8
 ```
 
+* if you have copied/download `en_ISO`… use command `sudo localedef -i en_ISO -f UTF-8 en_ISO.UTF-8` instead.
 * ***Why?*** This compiles the text file into a system-recognized locale.
 
 ### Step 4: Update System Configuration
@@ -83,8 +84,9 @@ sudo nano /etc/locale.gen
 2. Add:
 
 ```
-de_DE_ISO.UTF-8 UTF-8
+de_ISO.UTF-8 UTF-8
 ```
+or `en_ISO.UTF-8 UTF-8`, depending of which solution you opted.
 
 3. Regenerate locales:
 
@@ -103,7 +105,7 @@ sudo nano /etc/locale.conf
 2. Add/update:
 
 ```
-LC_TIME=de_DE_ISO.UTF-8
+LC_TIME=de_ISO.UTF-8
 ```
 
 3. My `/etc/locale.conf` made with [en_ISO](en_ISO):
@@ -151,14 +153,14 @@ LC_IDENTIFICATION=de_DE.UTF-8
 
 ```
 # ~/.config/fish/config.fish
-set -gx LC_TIME de_DE_ISO.UTF-8
+set -gx LC_TIME de_ISO.UTF-8
 ```
 
 * **Syntax example for Bash/Zsh:**
 
 ```
 # ~/.bashrc or ~/.zshrc
-export LC_TIME=de_DE_ISO.UTF-8
+export LC_TIME=de_ISO.UTF-8
 ```
 
 * **Reload your shell:**
@@ -191,13 +193,13 @@ Defaults env_keep += "LC_TIME"
 
 
 ```
-locale -a | grep de_DE_ISO  # Should show "de_DE_ISO.utf8"
+locale -a | grep de_ISO  # Should show "de_ISO.utf8"
 ```
 
 2. Confirm LC_TIME:
 
 ```
-locale | grep LC_TIME  # Should show "LC_TIME=de_DE_ISO.UTF-8"
+locale | grep LC_TIME  # Should show "LC_TIME=de_ISO.UTF-8"
 ```
 
 3. Test the date format:
@@ -206,7 +208,7 @@ locale | grep LC_TIME  # Should show "LC_TIME=de_DE_ISO.UTF-8"
 date  # Output: "2025-03-28 09:09:03 CET"
 ```
 
-4. Read/Test all locales:
+4. Read/Test all locales, Note: i use the `en_ISO` locale:
 
 ```
 locale
