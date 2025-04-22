@@ -27,7 +27,7 @@ sudo cp /usr/share/i18n/locales/de_DE /usr/share/i18n/locales/de_ISO
 1. Open the copied file:
 
 ```
-sudo nano /usr/share/i18n/locales/de_DE_ISO
+sudo nano /usr/share/i18n/locales/de_ISO
 ```
 
 2. Replace the `LC_TIME` section with ISO-8601 formats:
