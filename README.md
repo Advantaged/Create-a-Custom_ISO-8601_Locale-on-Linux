@@ -94,8 +94,8 @@ week     7;19971130;4        % This's valid for all EU-Countries
 first_weekday 2              % This's valid for at least all EU-Countries
 END LC_TIME
 ```
-* **If you have copied only your Country-Locale**, you are somewhere around the world & want ISO-8601 only…
- * **Replace only ISO-8601 Date-Time representation of `LC_TIME`**:
+* **If you have copied only your Country-Locale**, you are somewhere around the world & want ISO-8601 only…<br>
+**Replace only ISO-8601 Date-Time representation of `LC_TIME`**:
 ```bash
 % date formats following ISO 8601-1988
 d_t_fmt "%Y-%m-%d %H:%M:%S"   % ISO-8601 datetime
