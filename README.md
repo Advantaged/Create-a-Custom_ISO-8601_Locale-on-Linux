@@ -61,6 +61,10 @@ Configure your system to display dates in ISO-8601 format (**YYYY-MM-DD HH:MM:SS
 sudo cp /usr/share/i18n/locales/en_US /usr/share/i18n/locales/en_ISO
 ```
 *Why?* This preserves the original file and creates a modifiable copy.
+* **If you want to change only the ISO-8601 Date-Time representation** copy your own locale `es_ES`, `fr_FR`, `it_IT`, etc., example:
+```bash
+sudo cp /usr/share/i18n/locales/es_ES /usr/share/i18n/locales/es_ISO
+```
 
 ### Step 2: Modify the `LC_TIME` Section
 * **Open the copied file**:
@@ -71,19 +75,38 @@ sudo nano /usr/share/i18n/locales/en_ISO
 * **Replace the existing `LC_TIME` section with ISO-8601 formats**:
 ```bash
 LC_TIME
-abday   "So";"Mo";"Di";"Mi";"Do";"Fr";"Sa"
-day     "Sonntag";"Montag";"Dienstag";"Mittwoch";"Donnerstag";"Freitag";"Samstag"
-abmon   "Jan";"Feb";"Mär";"Apr";"Mai";"Jun";"Jul";"Aug";"Sep";"Okt";"Nov";"Dez"
-mon     "Januar";"Februar";"März";"April";"Mai";"Juni";"Juli";"August";"September";"Oktober";"November";"Dezember"
+abday	"Sun";"Mon";"Tue";"Wed";"Thu";"Fri";"Sat"
+day	"Sunday";"Monday";"Tuesday";"Wednesday";/
+	"Thursday";"Friday";"Saturday"
+abmon	"Jan";"Feb";"Mar";"Apr";"May";"Jun";/
+	"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"
+mon	"January";"February";"March";"April";/
+  "May";"June";"July";"August";/
+	"September";"October";"November";"December"
+% date formats following ISO 8601-1988
 d_t_fmt "%Y-%m-%d %H:%M:%S"   % ISO-8601 datetime
 d_fmt   "%Y-%m-%d"            % ISO-8601 date
 t_fmt   "%H:%M:%S"            % ISO-8601 time
 am_pm   "";""
 t_fmt_ampm ""
 date_fmt "%Y-%m-%d %H:%M:%S %Z"
+week     7;19971130;4        % This's valid for all EU-Countries
+first_weekday 2              % This's valid for at least all EU-Countries
 END LC_TIME
 ```
-
+* **Replace only ISO-8601 Date-Time representation of `LC_TIME`**:
+```bash
+% date formats following ISO 8601-1988
+d_t_fmt "%Y-%m-%d %H:%M:%S"   % ISO-8601 datetime
+d_fmt   "%Y-%m-%d"            % ISO-8601 date
+t_fmt   "%H:%M:%S"            % ISO-8601 time
+am_pm   "";""
+t_fmt_ampm ""
+date_fmt "%Y-%m-%d %H:%M:%S %Z"
+week     7;19971130;4        % This's valid for all EU-Countries
+first_weekday 2              % This's valid for at least all EU-Countries
+END LC_TIME
+```
 ### Step 3: Compile the Locale
 Generate the binary structure into system memory:
 ```bash
