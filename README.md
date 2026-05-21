@@ -49,7 +49,7 @@ An alternative to own ISO-8601 TIME locales is the standard `en_DK`, but this's 
 *Tested on CachyOS (Arch-based) | By: [tony advantaged]*
 
 ## Objective
-Configure your system to display dates in ISO-8601 format (**YYYY-MM-DD HH:MM:SS**) while keeping other locale settings (e.g., language, currency) unchanged.
+Configure your system to display dates in ISO-8601 format (**YYYY-mm-dd HH:MM:SS**) while keeping other locale settings (e.g., language, currency) unchanged.
 
 ---
 
