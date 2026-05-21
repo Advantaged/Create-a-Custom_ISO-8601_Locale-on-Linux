@@ -94,7 +94,8 @@ week     7;19971130;4        % This's valid for all EU-Countries
 first_weekday 2              % This's valid for at least all EU-Countries
 END LC_TIME
 ```
-* **Replace only ISO-8601 Date-Time representation of `LC_TIME`**:
+* **If you have copied only your Country-Locale**, you are somewhere around the world & want ISO-8601 only…
+ * **Replace only ISO-8601 Date-Time representation of `LC_TIME`**:
 ```bash
 % date formats following ISO 8601-1988
 d_t_fmt "%Y-%m-%d %H:%M:%S"   % ISO-8601 datetime
@@ -103,8 +104,6 @@ t_fmt   "%H:%M:%S"            % ISO-8601 time
 am_pm   "";""
 t_fmt_ampm ""
 date_fmt "%Y-%m-%d %H:%M:%S %Z"
-week     7;19971130;4        % This's valid for all EU-Countries
-first_weekday 2              % This's valid for at least all EU-Countries
 END LC_TIME
 ```
 ### Step 3: Compile the Locale
@@ -152,6 +151,7 @@ LC_ADDRESS=de_DE.UTF-8
 LC_TELEPHONE=de_DE.UTF-8
 LC_MEASUREMENT=de_DE.UTF-8
 LC_IDENTIFICATION=de_DE.UTF-8
+LC_ALL=
 ```
 
 ### Step 3: Clean and Harden Shell Configs
@@ -249,9 +249,9 @@ Execute the formatting test via an inline shell request:
 ```bash
 LC_TIME=en_ISO.UTF-8 date
 ```
-* **Expected Value Format:** `YYYY-MM-DD HH:MM:SS` (e.g., `2026-05-20 17:18:38 CEST`)
+* **Expected Value Format:** `YYYY-mm-dd HH:MM:SS` (e.g., `2026-05-20 17:18:38 CEST`)
 
-### Step 4: Review Complete Local Mapping Configuration Output
+### Step 4: Review Complete Local Mapping Configuration Output, `❯` point to the command
 ```bash
 ❯ locale
 LANG=en_US.UTF-8
@@ -277,6 +277,9 @@ LC_ALL=
 System clock synchronized: yes
               NTP service: active
           RTC in local TZ: no
+
+❯ date  
+2026-05-20 11:49:17 CEST
 ```
 
 ### Step 2: System Integrity / Hook Validation Check
