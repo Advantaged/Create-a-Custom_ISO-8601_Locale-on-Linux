@@ -1,6 +1,6 @@
 # Create-a-Custom_ISO-8601_Locale-on-Linux-V02.md
 
-* **Merit to:** AIs [DeepSeek](https://chat.deepseek.com/), [Gemini](https://gemini.google/about/) & Tony Advantaged
+* **Merit to:** AIs [DeepSeek](https://chat.deepseek.com/), [Gemini](https://gemini.google/about/) & non-AI [Tony Advantaged]
 * In my system i choose by the installation "American English" as Language and "Germany" as location but i want "date" to be represented following ISO-8601.
 
 ## Technical Architecture Overview
