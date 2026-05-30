@@ -1,35 +1,20 @@
 comment_char %
 escape_char /
 
-% This file is NOT part of the GNU C Library and contains locale data.
-% The Free Software Foundation does not claim any copyright interest
-% in the locale data contained in this file.  The foregoing does not
-% affect the license of the GNU C Library as a whole.  It does not
-% exempt you from the conditions of the license if your use would
-% otherwise be governed by that license.
-
-% English language locale for Germany with ISO-8601 Date- & Time-format
-%
-% Written according to POSIX.2
-% ISO/IEC 9945-2:1993 specifications
-%
+% Custom ISO-8601 English Locale (Bypassing Plasma GUI restrictions via en_IE)
 % Source: Tony Advantaged
-% Address: ""
-% Contact: ""
-% Language: en
-% Territory: ISO-DE
 
 LC_IDENTIFICATION
-title       "ISO 8601 English Locale"
-source      ""
-language    "English"
-territory   "ISO"
-revision    "1.0"
-date        "2024-03-27"
+title        "ISO 8601 English Locale (Custom)"
+source       ""
+language     "English"
+territory    "IE"
+revision     "1.0"
+date         "2026-05-30"
 END LC_IDENTIFICATION
 
 LC_CTYPE
-copy "en_US"  % Inherit character definitions
+copy "en_US"
 END LC_CTYPE
 
 LC_TIME
@@ -37,9 +22,9 @@ abday   "Sun";"Mon";"Tue";"Wed";"Thu";"Fri";"Sat"
 day     "Sunday";"Monday";"Tuesday";"Wednesday";"Thursday";"Friday";"Saturday"
 abmon   "Jan";"Feb";"Mar";"Apr";"May";"Jun";"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"
 mon     "January";"February";"March";"April";"May";"June";"July";"August";"September";"October";"November";"December"
-d_t_fmt "%Y-%m-%d %H:%M:%S"   % ISO-8601 datetime format
-d_fmt   "%Y-%m-%d"            % ISO-8601 date format
-t_fmt   "%H:%M:%S"            % ISO-8601 time format
+d_t_fmt "%Y-%m-%d %H:%M:%S"
+d_fmt   "%Y-%m-%d"
+t_fmt   "%H:%M:%S"
 am_pm   "";""
 t_fmt_ampm ""
 date_fmt "%Y-%m-%d %H:%M:%S %Z"
@@ -80,3 +65,5 @@ END LC_TELEPHONE
 LC_MEASUREMENT
 copy "de_DE"
 END LC_MEASUREMENT
+
+%
